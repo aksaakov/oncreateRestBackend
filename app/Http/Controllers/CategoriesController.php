@@ -48,7 +48,7 @@ class CategoriesController extends BaseController
                 //Filename to store
                 $fileNameToStore = $filename.'_'.time().'.'.$extension;
                 //Upload Image
-                $path = $request->file('image')->storeAs('/category_images', $fileNameToStore, 'public_directory');
+                $path = $request->file('image')->move(public_path('/category_images'), $fileNameToStore);
                 $item->image='category_images/'.$fileNameToStore;
                 $item->save();
     
