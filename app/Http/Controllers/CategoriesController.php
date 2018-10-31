@@ -32,6 +32,38 @@ class CategoriesController extends BaseController
         return Validator::make($request->all(), $rules);
     }
 
+    public function save($item, Request $request)
+    {
+        $validator = $this->getValidator($request);
+        if ($validator->passes()) {
+            $item->fill($request->all());
+            $item->save();
+            if($request->hasFile('image')) {
+                //Get Filename with the extension
+                $filenameWithExt = $request->file('image')->getClientOriginalName();
+                //Get Filename only
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                //Get Extension only
+                $extension = $request->file('image')->getClientOriginalExtension();
+                //Filename to store
+                $fileNameToStore = $filename.'_'.time().'.'.$extension;
+                //Upload Image
+                $path = $request->file('image')->storeAs('/category_images', $fileNameToStore, 'public_directory');
+                $item->image='category_images/'.$fileNameToStore;
+                $item->save();
+    
+            } else {
+                $fileNameToStore = 'noimage.jpg';
+            }
+    }
+        
+        // $item = new Category;
+        // $item->name = $request->input('name');
+        
+        // $item->save(); 
+        return redirect(route($this->base . '.index'));
+    }
+
     protected function getIndexItems($data)
     {
         if ($data != null) {
@@ -41,6 +73,9 @@ class CategoriesController extends BaseController
             }
             if (is_array($data) && isset($data['restaurant_id'])) {
                 $categories = $categories->where('restaurant_id', $data['restaurant_id']);
+            }
+            if (is_array($data) && isset($data['image'])) {
+                $products = $products->where('image', '=', $data['image']);
             }
             return $categories->paginate(50);
         }

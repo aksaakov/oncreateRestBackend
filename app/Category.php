@@ -13,7 +13,6 @@ class Category extends Model
     use NodeTrait;
 
     protected $fillable = ['name', 'parent_id', 'image', 'restaurant_id', 'city_id'];
-
     protected $appends = ['has_children', 'image_url'];
     protected $hidden = ['image'];
 

@@ -59,12 +59,13 @@
             </div>
         @endif
 
+        <!-- Image upload -->
         <div class="form-group">
-            <label for="" class="control-label">{{__('messages.categories.f_image')}}</label>
-            @if ($item->image != null)
+        <label for="" class="control-label">{{('Image')}}</label>
+        @if ($item->image != null)
                 <div class="row">
                     <div class="col-xs-6">
-                        <img src="{{ $item->image }}" alt="" class="img-responsive">
+                        <img src="{{ $item->image_url }}" alt="" class="img-responsive">
                     </div>
                 </div>
             @endif
