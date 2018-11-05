@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/product_image/{id}/delete', 'ProductsController@deleteImage')->name('products.delete_image');
     Route::put('/orders/{id}/boy', 'OrdersController@setDeliveryBoy')->name('orders.update_boy');
     Route::resource('orders', 'OrdersController');
+    Route::resource('homepage', 'HomePageController');
     Route::resource('news_items', 'NewsItemsController');
     Route::resource('settings', 'SettingsController');
     Route::resource('push_messages', 'PushMessagesController');

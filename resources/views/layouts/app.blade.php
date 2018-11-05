@@ -32,7 +32,12 @@
                 <ul class="nav nav-pills nav-stacked">
                     <li @if (preg_match('/^home/', \Route::currentRouteName())) class="active" @endif>
                         <a href="{{ route('home') }}">{{__('messages.dashboard.menu_title')}}</a>
-                    </li>
+                    </li>   
+                    @can('create', App\HomePage::class)
+                        <li @if (preg_match('/^homepage/', \Route::currentRouteName())) class="active" @endif>
+                            <a href="{{ route('homepage.index') }}">{{__('messages.homepage.menu_title')}}</a>
+                        </li>
+                    @endcan
                     @can('create', App\NewsItem::class)
                         <li @if (preg_match('/^news_items/', \Route::currentRouteName())) class="active" @endif>
                             <a href="{{ route('news_items.index') }}">{{__('messages.news.menu_title')}}</a>

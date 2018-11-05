@@ -77,7 +77,7 @@
             @foreach (['access_news', 'access_categories', 'access_products',
                 'access_orders', 'access_customers', 'access_pushes', 'access_delivery_areas',
                 'access_promo_codes', 'access_tax_groups', 'access_cities', 'access_restaurants',
-                'access_settings', 'access_users', 'access_delivery_boys', 'access_order_statuses', 'access_vendors'] as $role)
+                'access_settings', 'access_users', 'access_delivery_boys', 'access_order_statuses', 'access_vendors', 'access_homepage'] as $role)
             <div class="col-sm-4">
                 <div class="form-group">
                     <div class="checkbox">
