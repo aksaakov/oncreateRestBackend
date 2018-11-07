@@ -250,6 +250,12 @@ array (
     'title' => 'Dashboard',
     'sales_int' => 'Sales',
   ),
+  'homepage' =>
+  array (
+    'title' => 'Title',
+    'menu_title' => 'Homepage',
+    'description' => 'Description',
+  ),
   'customers' => 
   array (
     'menu_title' => 'Customers',
@@ -294,7 +300,8 @@ array (
     'access_full' => 'FULL access',
     'access_delivery_boys' => 'Delivery boys',
     'access_order_statuses' => 'Order statuses',
-      'access_vendors' => 'Vendors'
+    'access_vendors' => 'Vendors',
+    'access_homepage' => 'Homepage'
   ),
   'delivery_boys' => 
   array (

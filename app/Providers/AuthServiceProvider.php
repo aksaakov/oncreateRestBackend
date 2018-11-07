@@ -16,6 +16,7 @@ use App\City;
 use App\Restaurant;
 use App\Settings;
 use App\NewsItem;
+use App\HomePage;
 use App\DeliveryBoy;
 use App\DeliveryBoyMessage;
 use App\OrderStatus;
@@ -34,6 +35,7 @@ use App\Policies\CityPolicy;
 use App\Policies\RestaurantPolicy;
 use App\Policies\SettingsPolicy;
 use App\Policies\NewsItemPolicy;
+use App\Policies\HomePagePolicy;
 use App\Policies\DeliveryBoyPolicy;
 use App\Policies\DeliveryBoyMessagePolicy;
 use App\Policies\OrderStatusPolicy;
@@ -63,6 +65,7 @@ class AuthServiceProvider extends ServiceProvider
         Restaurant::class => RestaurantPolicy::class,
         Settings::class => SettingsPolicy::class,
         NewsItem::class => NewsItemPolicy::class,
+        HomePage::class => HomePagePolicy::class,
         OrderedProduct::class => OrderedProductPolicy::class,
         DeliveryBoy::class => DeliveryBoyPolicy::class,
         DeliveryBoyMessage::class => DeliveryBoyMessagePolicy::class,

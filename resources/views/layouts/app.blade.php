@@ -30,90 +30,95 @@
         <div class="row">
             <div class="col-md-3 sidenav">
                 <ul class="nav nav-pills nav-stacked">
-                    <li @if (preg_match('/^home/', \Route::currentRouteName())) class="active" @endif>
+                    <li class="{{ Request::segment(1) === 'home' ? 'active' : null }}">
                         <a href="{{ route('home') }}">{{__('messages.dashboard.menu_title')}}</a>
-                    </li>
+                    </li>   
+                    @can('create', App\HomePage::class)
+                        <li class="{{ Request::segment(1) === 'homepage' ? 'active' : null }}">
+                            <a href="{{ route('homepage.index') }}">{{__('messages.homepage.menu_title')}}</a>
+                        </li>
+                    @endcan
                     @can('create', App\NewsItem::class)
-                        <li @if (preg_match('/^news_items/', \Route::currentRouteName())) class="active" @endif>
+                        <li class="{{ Request::segment(1) === 'news_items' ? 'active' : null }}">
                             <a href="{{ route('news_items.index') }}">{{__('messages.news.menu_title')}}</a>
                         </li>
                     @endcan
                     @can('create', \App\Category::class)
-                        <li @if (preg_match('/^categories/', \Route::currentRouteName())) class="active" @endif>
+                        <li class="{{ Request::segment(1) === 'categories' ? 'active' : null }}">
                             <a href="{{ route('categories.index') }}">{{__('messages.categories.menu_title')}}</a>
                         </li>
                     @endcan
                     @can('create', App\Product::class)
-                    <li @if (preg_match('/^products/', \Route::currentRouteName())) class="active" @endif>
+                    <li class="{{ Request::segment(1) === 'prodcuts' ? 'active' : null }}">
                         <a href="{{ route('products.index') }}">{{__('messages.products.menu_title')}}</a>
                     </li>
                     @endcan
                     @can('create', App\Order::class)
-                        <li @if (preg_match('/^orders/', \Route::currentRouteName())) class="active" @endif>
+                        <li class="{{ Request::segment(1) === 'orders' ? 'active' : null }}">
                             <a href="{{ route('orders.index') }}">{{__('messages.orders.menu_title')}}</a>
                         </li>
                     @endcan
                     @can('create', App\Customer::class)
-                        <li @if (preg_match('/^customers/', \Route::currentRouteName())) class="active" @endif>
+                        <li class="{{ Request::segment(1) === 'customers' ? 'active' : null }}">
                             <a href="{{ route('customers.index') }}">{{__('messages.customers.menu_title')}}</a>
                         </li>
                     @endcan
                     @can('create', App\Vendor::class)
-                        <li @if (preg_match('/^vendors/', \Route::currentRouteName())) class="active" @endif>
+                        <li class="{{ Request::segment(1) === 'vendors' ? 'active' : null }}">
                             <a href="{{ route('vendors.index') }}">{{__('messages.vendors.menu_title')}}</a>
                         </li>
                     @endcan
                     @can('create', App\PushMessage::class)
-                        <li @if (preg_match('/^push_messages/', \Route::currentRouteName())) class="active" @endif>
+                        <li class="{{ Request::segment(1) === 'push_messages' ? 'active' : null }}">
                             <a href="{{ route('push_messages.index') }}">{{__('messages.push_messages.menu_title')}}</a>
                         </li>
                     @endcan
                     @can('create', App\DeliveryArea::class)
-                        <li @if (preg_match('/^delivery_areas/', \Route::currentRouteName())) class="active" @endif>
+                        <li class="{{ Request::segment(1) === 'delivery_areas' ? 'active' : null }}">
                             <a href="{{ route('delivery_areas.index') }}">{{__('messages.delivery_areas.menu_title')}}</a>
                         </li>
                     @endcan
                     @can('create', App\DeliveryBoy::class)
-                        <li @if (preg_match('/^delivery_boys/', \Route::currentRouteName())) class="active" @endif>
+                        <li class="{{ Request::segment(1) === 'delivery_boys' ? 'active' : null }}">
                             <a href="{{ route('delivery_boys.index') }}">{{__('messages.delivery_boys.menu_title')}}</a>
                         </li>
                     @endcan
                     @can('create', App\PromoCode::class)
-                        <li @if (preg_match('/^promo_codes/', \Route::currentRouteName())) class="active" @endif>
+                        <li class="{{ Request::segment(1) === 'promo_codes' ? 'active' : null }}">
                             <a href="{{ route('promo_codes.index') }}">{{__('messages.promo_codes.menu_title')}}</a>
                         </li>
                     @endcan
                     @can('create', App\TaxGroup::class)
-                        <li @if (preg_match('/^tax_groups/', \Route::currentRouteName())) class="active" @endif>
+                        <li class="{{ Request::segment(1) === 'tax_groups' ? 'active' : null }}">
                             <a href="{{ route('tax_groups.index') }}">{{__('messages.tax_groups.menu_title')}}</a>
                         </li>
                     @endcan
                     @can('create', App\OrderStatus::class)
-                        <li @if (preg_match('/^order_statuses/', \Route::currentRouteName())) class="active" @endif>
+                        <li class="{{ Request::segment(1) === 'order_statuses' ? 'active' : null }}">
                             <a href="{{ route('order_statuses.index') }}">{{__('messages.order_statuses.menu_title')}}</a>
                         </li>
                     @endcan
                     @if (\App\Settings::getSettings()->multiple_cities)
                         @can('create', App\City::class)
-                            <li @if (preg_match('/^cities/', \Route::currentRouteName())) class="active" @endif>
+                            <li class="{{ Request::segment(1) === 'cities' ? 'active' : null }}">
                                 <a href="{{ route('cities.index') }}">{{__('messages.cities.menu_title')}}</a>
                             </li>
                         @endcan
                     @endif
                     @if (\App\Settings::getSettings()->multiple_restaurants)
                         @can('create', App\Restaurant::class)
-                            <li @if (preg_match('/^restaurants/', \Route::currentRouteName())) class="active" @endif>
+                            <li class="{{ Request::segment(1) === 'restaurants' ? 'active' : null }}">
                                 <a href="{{ route('restaurants.index') }}">{{__('messages.restaurants.menu_title')}}</a>
                             </li>
                         @endcan
                     @endif
                     @can('create', App\Settings::class)
-                        <li @if (preg_match('/^settings/', \Route::currentRouteName())) class="active" @endif>
+                        <li class="{{ Request::segment(1) === 'settings' ? 'active' : null }}">
                             <a href="{{ route('settings.index') }}">{{__('messages.settings.menu_title')}}</a>
                         </li>
                     @endcan
                     @can('create', App\User::class)
-                        <li @if (preg_match('/^users/', \Route::currentRouteName())) class="active" @endif>
+                        <li class="{{ Request::segment(1) === 'users' ? 'active' : null }}">
                             <a href="{{ route('users.index') }}">{{__('messages.users.menu_title')}}</a>
                         </li>
                     @endcan

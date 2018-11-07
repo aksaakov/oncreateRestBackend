@@ -20,7 +20,7 @@ class User extends Authenticatable
         'access_orders', 'access_customers', 'access_pushes', 'access_delivery_areas',
         'access_promo_codes', 'access_tax_groups', 'access_cities', 'access_restaurants',
         'access_settings', 'access_users', 'access_delivery_boys', 'access_order_statuses',
-        'access_vendors'
+        'access_vendors', 'access_homepage'
     ];
 
     /**
