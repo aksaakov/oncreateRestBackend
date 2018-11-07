@@ -4,6 +4,7 @@
 /public/category_images
 /public/product_images
 /storage/*.key
+/public
 /vendor
 /.idea
 /.vagrant
