@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('homepage', function (Blueprint $table) {
             $table->string('Title');
             $table->string('Description');
+            $table->date('');
         });
     }
 

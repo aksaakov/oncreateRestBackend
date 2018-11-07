@@ -252,7 +252,9 @@ array (
   ),
   'homepage' =>
   array (
+    'title' => 'Title',
     'menu_title' => 'Homepage',
+    'description' => 'Description',
   ),
   'customers' => 
   array (

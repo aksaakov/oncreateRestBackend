@@ -99,53 +99,53 @@ class BaseController extends Controller
      * @param  Request $request request object
      * @return void
      */
-    // protected function save($item, Request $request)
-    // {
-    //     $validator = $this->getValidator($request);
-    //     if ($validator->passes()) {
-    //         $data = $this->modifyRequestData($request->all());
-    //         foreach ($this->setEmpty as $key) {
-    //             if (!isset($data[$key])) {
-    //                 $data[$key] = '';
-    //             }
-    //         }
-    //         foreach ($this->checkboxes as $key) {
-    //             if (!isset($data[$key])) {
-    //                 $data[$key] = false;
-    //             }
-    //             else {
-    //                 $data[$key] = false;
-    //             }
-    //         }
-    //         $item->fill($data);
-    //         foreach ($this->images as $image) {
-    //             $file_name = Input::file($image);
-    //             $image = false;
-    //             if(@is_array(getimagesize($file_name))){
-    //                 $image = true;
-    //             }
-    //             if (!$image) {
-    //                 continue;
-    //             }
-    //             if ($file_name != null) {
-    //                 $new_file = str_random(10) . '.' . $file_name->getClientOriginalExtension();
-    //                 $file_name->move(public_path('category_images'), $new_file);
-    //                 $item->$image = '/category_images/' . $new_file;
-    //             }
-    //         }
-    //         $item->save();
-    //         foreach ($this->manyToMany as $key => $value) {
-    //             if (isset($data[$value])) {
-    //                 $item->$key()->sync($data[$value]);
-    //             }
-    //         }
-    //         return redirect($this->redirectOnCreatePath($request));
-    //     } else {
-    //         $item->fill($request->all());
-    //         $errors = $validator->messages();
-    //         return view($this->base . '.form', array_merge(compact('item', 'errors'), $this->getAdditionalData($request->all())));
-    //     }
-    // }
+    protected function save($item, Request $request)
+    {
+        $validator = $this->getValidator($request);
+        if ($validator->passes()) {
+            $data = $this->modifyRequestData($request->all());
+            foreach ($this->setEmpty as $key) {
+                if (!isset($data[$key])) {
+                    $data[$key] = '';
+                }
+            }
+            foreach ($this->checkboxes as $key) {
+                if (!isset($data[$key])) {
+                    $data[$key] = false;
+                }
+                else {
+                    $data[$key] = false;
+                }
+            }
+            $item->fill($data);
+            // foreach ($this->images as $image) {
+            //     $file_name = Input::file($image);
+            //     $image = false;
+            //     if(@is_array(getimagesize($file_name))){
+            //         $image = true;
+            //     }
+            //     if (!$image) {
+            //         continue;
+            //     }
+            //     if ($file_name != null) {
+            //         $new_file = str_random(10) . '.' . $file_name->getClientOriginalExtension();
+            //         $file_name->move(public_path('category_images'), $new_file);
+            //         $item->$image = '/category_images/' . $new_file;
+            //     }
+            // }
+            $item->save();
+            foreach ($this->manyToMany as $key => $value) {
+                if (isset($data[$value])) {
+                    $item->$key()->sync($data[$value]);
+                }
+            }
+            return redirect($this->redirectOnCreatePath($request));
+        } else {
+            $item->fill($request->all());
+            $errors = $validator->messages();
+            return view($this->base . '.form', array_merge(compact('item', 'errors'), $this->getAdditionalData($request->all())));
+        }
+    }
 
     protected function redirectOnCreatePath(Request $request)
     {
