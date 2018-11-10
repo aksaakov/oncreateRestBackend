@@ -39,6 +39,29 @@ class HomePageController extends BaseController
         return HomePage::policyScope();
     }
 
+    public function save($item, Request $request)
+    {
+        $validator = $this->getValidator($request);
+        if ($validator->passes()) {
+            $item->fill($request->all());
+            if($request->hasFile('image')) {
+                //Get Extension only
+                $extension = $request->file('image')->getClientOriginalExtension();
+                //Filename to store
+                $fileNameToStore = 'homepageimage'.'.'.$extension;
+                //Upload Image
+                $path = $request->file('image')->storeAs('/homepage_image', $fileNameToStore, 'public_directory');
+                $item->image='homepage_image/'.$fileNameToStore;
+                $item->save();
+    
+            } else {
+                $fileNameToStore = 'noimage.jpg';
+                $item->save();
+            }
+            return redirect(route($this->base . '.index'));
+        }
+    }
+
     public function index(Request $request)
     {
         if (!Gate::allows('create', $this->cls)) {

@@ -25,7 +25,18 @@
                 </span>
         @endif
     </div>
-
+        <!-- Image upload -->
+    <div class="form-group">
+        <label for="" class="control-label">{{('Image')}}</label>
+        @if ($item->image != null)
+            <div class="row">
+                <div class="col-xs-6">
+                    <img src="{{ $item->image_url }}" alt="" class="img-responsive">
+                </div>
+            </div>
+        @endif
+        <input type="file" name="image">
+    </div>
 
         <button type="submit" class="btn btn-primary btn-block">{{__('messages.actions.save')}}</button>
 </form>

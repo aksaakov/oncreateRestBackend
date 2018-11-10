@@ -11,6 +11,8 @@ class HomePage extends Model
 {
     protected $table = 'homepage';
     protected $fillable = ['Title', 'Description'];
+    protected $appends = ['image_url'];
+    protected $hidden = ['image'];
     private static $instance;
     public $timestamps = false;
     protected $primaryKey = 'Title';
@@ -23,6 +25,11 @@ class HomePage extends Model
     	return $this->belongsTo(City::class);
     }
 
+    public function getImageUrlAttribute()
+    {
+      return url($this->image);
+    }
+    
      /**
      * Current homepage object, with caching
      * @return HomePage
