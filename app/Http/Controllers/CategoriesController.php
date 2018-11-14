@@ -37,7 +37,6 @@ class CategoriesController extends BaseController
         $validator = $this->getValidator($request);
         if ($validator->passes()) {
             $item->fill($request->all());
-            $item->save();
             if($request->hasFile('image')) {
                 //Get Filename with the extension
                 $filenameWithExt = $request->file('image')->getClientOriginalName();
@@ -54,6 +53,7 @@ class CategoriesController extends BaseController
     
             } else {
                 $fileNameToStore = 'noimage.jpg';
+                $item->save();
             }
     }
         
