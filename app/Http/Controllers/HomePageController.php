@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Validator;
+use File;
 use App\HomePage;
 use Illuminate\Http\Request;
 use Gate;
@@ -50,6 +51,7 @@ class HomePageController extends BaseController
                 //Filename to store
                 $fileNameToStore = 'homepageimage'.'.'.$extension;
                 //Upload Image
+                File::cleanDirectory(public_directory('/homepage_image'));
                 $path = $request->file('image')->storeAs('/homepage_image', $fileNameToStore, 'public_directory');
                 $item->image='homepage_image/'.$fileNameToStore;
                 $item->save();
