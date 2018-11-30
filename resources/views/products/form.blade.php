@@ -1,8 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+
     <form method="post" action="@if ($item->id == null) {{ route('products.store') }} @else {{ route('products.update', ['id' => $item->id]) }} @endif" enctype="multipart/form-data">
         {{ csrf_field() }}
+
+        <h1>Add product</h1>
+        <h3>Menu item</h3>
         @if ($item->id != null)
             {{ method_field('PUT') }}
         @endif
@@ -129,6 +133,70 @@
                     <strong>{{ $errors->first('description') }}</strong>
                 </span>
             @endif
+        </div>
+
+        <label for="" class="control-label">Additional Options:</label>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group {{ $errors->has('option') ? ' has-error' : '' }}">
+                    <input type="text" class="form-control" value="{{$item->option1}}" name="option1"/>
+                    @if ($errors->has('option'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('option') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group {{ $errors->has('option') ? ' has-error' : '' }}">
+                    <input type="text" class="form-control" value="{{$item->option2}}" name="option2"/>
+                    @if ($errors->has('option'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('option') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group {{ $errors->has('option') ? ' has-error' : '' }}">
+                    <input type="text" class="form-control" value="{{$item->option3}}" name="option3"/>
+                    @if ($errors->has('option'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('option') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group {{ $errors->has('option') ? ' has-error' : '' }}">
+                    <input type="text" class="form-control" value="{{$item->option4}}" name="option4"/>
+                    @if ($errors->has('option'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('option') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group {{ $errors->has('option') ? ' has-error' : '' }}">
+                    <input type="text" class="form-control" value="{{$item->option5}}" name="option5"/>
+                    @if ($errors->has('option'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('option') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group {{ $errors->has('option') ? ' has-error' : '' }}">
+                    <input type="text" class="form-control" value="{{$item->option6}}" name="option6"/>
+                    @if ($errors->has('option'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('option') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
         </div>
 
         <h3>{{__('messages.products.f_image')}}</h3>
