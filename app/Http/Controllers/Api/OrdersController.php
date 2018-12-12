@@ -52,6 +52,7 @@ class OrdersController extends Controller
 
     public function create(Request $request)
     {
+        try{
         $apiToken = ApiToken::where('token', $request->header('token'))->first();
         $customer_id = null;
         if ($apiToken) {
@@ -81,16 +82,19 @@ class OrdersController extends Controller
         $response = $service->createOrder($data, $request->input('products'), $request->input('code'));
         if ($response['success']) {
             $order = $response['order']->fresh();
-            Mail::send('emails.order_created', ['item' => $order], function ($m) use ($order) {
-                $m->from(Settings::getSettings()->mail_from_mail, Settings::getSettings()->mail_from_name);
-                $m->to(Settings::getSettings()->notification_email)->subject(Settings::getSettings()->mail_from_new_order_subject);
-            });
+            // Mail::send('emails.order_created', ['item' => $order], function ($m) use ($order) {
+            //     $m->from(Settings::getSettings()->mail_from_mail, Settings::getSettings()->mail_from_name);
+            //     $m->to(Settings::getSettings()->notification_email)->subject(Settings::getSettings()->mail_from_new_order_subject);
+            // });
             $response = [
                 'success' => true,
                 'order' => $order->load('orderedProducts')->toArray()
             ];
         }
         return response()->json($response);
+    }catch(\Exception $e){
+        print $e;
+    }
     }
 
     protected function getValidator($data)
