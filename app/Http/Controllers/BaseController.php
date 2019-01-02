@@ -114,7 +114,7 @@ class BaseController extends Controller
                     $data[$key] = false;
                 }
                 else {
-                    $data[$key] = false;
+                    $data[$key] = true;
                 }
             }
             $item->fill($data);
