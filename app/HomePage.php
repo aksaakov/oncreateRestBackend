@@ -12,7 +12,7 @@ class HomePage extends Model
     protected $table = 'homepage';
     protected $fillable = ['Title', 'Description', 
     'mon_open', 'mon_close', 'tue_open', 'tue_close', 'wed_open', 'wed_close', 'thu_open', 'thu_close', 'fri_open', 'fri_close', 'sat_open', 'sat_close', 'sun_open', 'sun_close',
-    'address', 'phone', 'email', 'facebook', 'twitter', 'instagram'];
+    'address', 'phone', 'email', 'facebook', 'twitter', 'instagram', 'email'];
     protected $appends = ['image_url'];
     protected $hidden = ['image'];
     private static $instance;
