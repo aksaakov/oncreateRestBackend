@@ -81,6 +81,15 @@
                 </span>
         @endif
     </div>
+    <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+        <label for="" class="control-label">Email:</label>
+        <input type="text" class="form-control" value="{{$item->email}}" name="email"/>
+        @if ($errors->has('email'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('email') }}</strong>
+                </span>
+        @endif
+    </div>
     <div class="form-group {{ $errors->has('facebook') ? ' has-error' : '' }}">
         <label for="" class="control-label">Facebook:</label>
         <input type="text" class="form-control" value="{{$item->facebook}}" name="facebook"/>
