@@ -6,6 +6,7 @@ use Gate;
 use Illuminate\Support\Facades\Input;
 use Validator;
 use Illuminate\Http\Request;
+use Mail;
 
 // 
 // Base controller for admin panels
