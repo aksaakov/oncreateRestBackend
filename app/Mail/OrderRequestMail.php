@@ -6,30 +6,31 @@ use App\Settings;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
-class EmailHandler extends Mailable
+class OrderRequestMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
     public $order;
 
-    public function __construct($data, $order)
+    public function __construct($order)
     {
-        $this->data = $data;
         $this->order = $order;
     }
 
     public function build()
     {
-        //$address = 'info@petersalaam.com';
-        $address = Settings::getSettings()->notification_email;
-        $name = Settings::getSettings()->mail_from_new_order_subject;
+        $address = 'info@petersalaam.com';
+        $name = 'New Order';
+        //$address = Settings::getSettings()->notification_email;
+        //$name = Settings::getSettings()->mail_from_new_order_subject;
 
-//        $name = 'Restaurant Name';
-        $subject = $this->data['subject'];
-
-
+        
+        
+        //$subject = $this->data['subject'];
+        $subject = 'Order Id: ' . ($this->order['id']);
+        
         return $this->view('emails.send')
 //            ->from($address, $name)
 //            ->cc($address, $name)
@@ -38,6 +39,4 @@ class EmailHandler extends Mailable
             ->from($address, $name)
             ->subject($subject);
     }
-
-
 }

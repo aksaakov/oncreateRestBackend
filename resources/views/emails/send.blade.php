@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<h2>{{ __('messages.orders.show_title', ['id' => $order->id]) }}</h2>
+<h2>New Order:</h2>
+<!--<p>-->
+<!--    <b>{{ __('messages.orders.show_title', ['id' => $order->id]) }}-->
+<!--</p>-->
 <p>
     <b>{{__('messages.orders.d_client_name')}}</b> {{ $order->name }}
 </p>

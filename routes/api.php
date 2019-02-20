@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['namespace' => 'Api', 'middleware' => ['cors']], function () {
+    Route::post('/send', 'EmailController@send');
     Route::get('/vendors', 'VendorsController@index')->name('vendors.index');
     Route::get('/homepage', 'HomePageController@index')->name('homepage.form');
     Route::get('/categories', 'CategoriesController@index')->name('categories.index');

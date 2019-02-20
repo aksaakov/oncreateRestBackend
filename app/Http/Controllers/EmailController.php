@@ -1,19 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Mail\EmailHandler;
+use App\Mail\OrderRequestMail;
 use Mail;
+use Illuminate\Support\Facades\Log;
 
 class EmailController extends Controller
 {
 
-    static public function sendOrderConfirmation($order_details){
-        $data = [
-            'subject' => 'New Order',
-            'content' => 'Details about the order will go here! (going to spam?)'
-        ];
-        Mail::to('chalikov@oncreate.studio')->send(new EmailHandler($data, $order_details));
-
+    static public function sendNewOrderReq($order){
+        Mail::to('chalikov@oncreate.studio')->send(new OrderRequestMail($order));
         return response()->json(['message' => 'Request completed']);
     }
 

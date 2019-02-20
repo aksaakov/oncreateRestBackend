@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', 'Auth\LoginController@showLoginForm');
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
@@ -19,9 +18,9 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::post('/send', 'EmailController@sendOrderConfirmation');
     Route::post('/category/{id}/up', 'CategoriesController@up')->name('category_up');
     Route::post('/category/{id}/down', 'CategoriesController@down')->name('category_down');
+    
     Route::resource('categories', 'CategoriesController');
     Route::get('/products/autocomplete', 'ProductsController@autocomplete');
     Route::get('/products/bulk_upload', 'ProductsController@bulk_upload')->name('products.bulk_upload');

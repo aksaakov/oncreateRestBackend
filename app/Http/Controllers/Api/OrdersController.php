@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use App\Services\OrdersService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class OrdersController extends Controller
 {
@@ -83,11 +84,7 @@ class OrdersController extends Controller
         $response = $service->createOrder($data, $request->input('products'), $request->input('code'));
         if ($response['success']) {
             $order = $response['order']->fresh();
-//             Mail::send('emails.order_created', ['item' => $order], function ($m) use ($order) {
-//                 $m->from(Settings::getSettings()->mail_from_mail, Settings::getSettings()->mail_from_name);
-//                 $m->to(Settings::getSettings()->notification_email)->subject(Settings::getSettings()->mail_from_new_order_subject);
-//             });
-            EmailController::sendOrderConfirmation($order);
+            EmailController::sendNewOrderReq($order);
             $response = [
                 'success' => true,
                 'order' => $order->load('orderedProducts')->toArray()
@@ -95,6 +92,7 @@ class OrdersController extends Controller
         }
         return response()->json($response);
     }catch(\Exception $e){
+        Log::alert($e);
         print $e;
     }
     }

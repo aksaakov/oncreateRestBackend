@@ -120,7 +120,7 @@
                     @can('update', $item)
                         <a href="{{ route('orders.show', ['id' => $item->id]) }}" class="btn btn-success btn-xs">{{__('messages.actions.show')}}</a>
                         <a href="{{ route('orders.edit', ['id' => $item->id]) }}" class="btn btn-default btn-xs">{{__('messages.actions.edit')}}</a>
-                        <a href="{{action('EmailController@send')}}" class="btn btn-default btn-xs">{{__('accept')}}</a>
+                        <a href="" class="btn btn-default btn-xs">{{__('accept')}}</a>
                         <a class="btn btn-default btn-xs">{{__('reject')}}</a>
 
 
