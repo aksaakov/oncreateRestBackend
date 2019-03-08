@@ -88,9 +88,20 @@
             <th></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="table_body">
+        {{--@foreach(App\User::find(1)->unreadNotifications as $notification)@endforeach--}}
+        @php ($orders = [])
         @foreach($items as $item)
-            <tr>
+            @foreach(App\User::find(1)->unreadNotifications as $notification)
+                @php ($orders[] = $notification->data['order_id'])
+            @endforeach
+
+            @if(in_array($item->id, $orders))
+                <tr style="background-color:rgba(125,168,195,0.23);">
+            @else
+                <tr style="background-color:#f9f9f9;">
+            @endif
+
                 <td>{{ $item->id }}</td>
                 <td>{{ $item->created_at->format(\App\Settings::getSettings()->time_format_backend) }}</td>
                 <td>{{ $item->name }}</td>
@@ -120,10 +131,6 @@
                     @can('update', $item)
                         <a href="{{ route('orders.show', ['id' => $item->id]) }}" class="btn btn-success btn-xs">{{__('messages.actions.show')}}</a>
                         <a href="{{ route('orders.edit', ['id' => $item->id]) }}" class="btn btn-default btn-xs">{{__('messages.actions.edit')}}</a>
-                        <a href="" class="btn btn-default btn-xs">{{__('accept')}}</a>
-                        <a class="btn btn-default btn-xs">{{__('reject')}}</a>
-
-
                     @endcan
                     @can('delete', $item)
                         <a href="{{ route('ordered_products.index', ['filter' => ['order_id' => $item->id]]) }}" class="btn btn-info btn-xs">{{__('messages.actions.edit_products')}}</a>
@@ -137,4 +144,22 @@
     @if (\App\Settings::getSettings()->multiple_restaurants || \App\Settings::getSettings()->multiple_cities)
         <script src="/custom_js/products.js"></script>
     @endif
+
+    {{--<script src="//js.pusher.com/3.1/pusher.min.js"></script>--}}
+
+    {{--<script type="text/javascript">--}}
+        {{--var namesWrapper = $('#table_body');--}}
+
+        {{--var pusher = new Pusher('dd94d57bec2274a5cd31', {--}}
+            {{--encrypted: true,--}}
+            {{--cluster: 'eu',--}}
+        {{--});--}}
+
+        {{--var channel = pusher.subscribe('notify');--}}
+        {{--channel.bind('notify-event', function(message) {--}}
+            {{--window.location.reload(true);--}}
+            {{--// namesWrapper.reload(true);--}}
+        {{--});--}}
+
+    {{--</script>--}}
 @endsection

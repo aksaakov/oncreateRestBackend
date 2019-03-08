@@ -24,8 +24,8 @@
     </script>
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
-<body>
-    <form class="hidden" id="logout-form" action="{{ route('logout') }}" method="POST">{{ csrf_field() }}</form>
+<body id="body">
+<form class="hidden" id="logout-form" action="{{ route('logout') }}" method="POST">{{ csrf_field() }}</form>
     <div class="container">
         <div class="row">
             <div class="col-md-3 sidenav">
@@ -54,8 +54,12 @@
                     </li>
                     @endcan
                     @can('create', App\Order::class)
-                        <li class="{{ Request::segment(1) === 'orders' ? 'active' : null }}">
-                            <a href="{{ route('orders.index') }}">{{__('messages.orders.menu_title')}}</a>
+                        <li class="{{ Request::segment(1) === 'orders' ? 'active' : null }} ">
+                            @php($notifications = count(App\User::find(1)->unreadNotifications))
+                                <a id="orders_btn" class="orders_button" href="{{ route('orders.index') }}">
+                                    <text class="notification_dot" style="color:red;"> ● </text>
+                                    {{__('Orders')}}
+                                    <text class="notifications_text">(<span class="notif-count">{{$notifications}}</span>)</text> </a>
                         </li>
                     @endcan
                     @can('create', App\Customer::class)
@@ -153,6 +157,86 @@
         window.locale = {
             confirm: '{{ __("messages.common.confirm") }}'
         };
+    </script>
+    <script src="//js.pusher.com/3.1/pusher.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src='https://code.jquery.com/jquery-2.2.0.min.js'></script>
+    <script src='https://cdn.rawgit.com/admsev/jquery-play-sound/master/jquery.playSound.js'></script>
+
+    <script>
+        function notifyMe() {
+            // Let's check if the browser supports notifications
+            if (!("Notification" in window)) {
+                alert("This browser does not support desktop notification");
+            }
+            // Let's check whether notification permissions have already been granted
+            else if (Notification.permission === "granted" && document.visibilityState !== "visible") {
+                // If it's okay let's create a notification
+                var notification = new Notification("New order notification!",
+                    {
+                        requireInteraction: true,
+                        body: 'Click here to view orders.',
+                    });
+                notification.onclick = function () {
+                    window.focus();
+                    notification.close();
+                };
+            }
+
+            // Otherwise, we need to ask the user for permission
+            else if (Notification.permission !== "denied" && document.visibilityState !== "visible") {
+                Notification.requestPermission().then(function (permission) {
+                    // If the user accepts, let's create a notification
+                    if (permission === "granted") {
+                        var notification = new Notification("New order notification!");
+                    }
+                });
+            }
+
+            // At last, if the user has denied notifications, and you
+            // want to be respectful there is no need to bother them any more.
+        }
+    </script>
+    <script type="text/javascript">
+        var ordersButton   = $('.orders_button');
+        var notificationDot   = $('.notification_dot');
+        var notificationsText = $('.notifications_text');
+
+        var notificationsCount = parseInt("<?php echo $notifications; ?>");
+        if (notificationsCount <= 0) {
+            notificationsText.hide();
+            notificationDot.hide();
+        }
+         var pusher = new Pusher('dd94d57bec2274a5cd31', {
+         encrypted: true,
+         cluster: 'eu',
+         });
+
+        var channel = pusher.subscribe('notify');
+        channel.bind('notify-event', function(message) {
+        notificationsCount += 1;
+            ordersButton.find('.notif-count').text(notificationsCount);
+            notificationsText.show();
+            notificationDot.show();
+            $.playSound("{{asset('notif_sound.wav')}}");
+            if(location.pathname==="/orders"){
+                swal("There's a new order!","","info")
+                    .then((value) => {
+                        if(value) window.location.reload(true);
+                    });
+            } else {
+                swal("There's a new order!", "Go to the orders page?", {
+                    buttons: {
+                        cancel: "Later",
+                        defeat: "View Orders",
+                    }, icon: "info",
+                })
+                    .then((value) => {
+                        if(value)  window.location.replace("/orders");
+                    });
+            }
+            notifyMe();
+        });
     </script>
 </body>
 </html>

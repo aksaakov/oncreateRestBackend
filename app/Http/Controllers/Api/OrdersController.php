@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\EmailController;
+//use Illuminate\Notifications\Notification;
 use Mail;
 use App\ApiToken;
 use App\DeliveryArea;
@@ -17,6 +18,9 @@ use App\Services\OrdersService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Notifications\orderAlert;
+use Illuminate\Support\Facades\Notification;
+use App\User;
 
 class OrdersController extends Controller
 {
@@ -84,7 +88,12 @@ class OrdersController extends Controller
         $response = $service->createOrder($data, $request->input('products'), $request->input('code'));
         if ($response['success']) {
             $order = $response['order']->fresh();
-            EmailController::sendNewOrderReq($order);
+
+            $user = User::first();
+            Notification::send($user, new orderAlert($order));
+//            EmailController::sendNewOrderReq($order);
+
+
             $response = [
                 'success' => true,
                 'order' => $order->load('orderedProducts')->toArray()

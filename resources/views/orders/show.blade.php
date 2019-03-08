@@ -1,7 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2>{{ __('messages.orders.show_title', ['id' => $item->id]) }}</h2>
+
+        @foreach(App\User::find(1)->unreadNotifications as $notification)
+
+                {{--@php ($orders[] = $notification->data['order_id']);--}}
+                @if($item->id == $notification->data['order_id'])
+                    @php($notification->markAsRead())
+                @endif
+        @endforeach
+
     <p>
         <b>{{ __('messages.orders.delivery_boy') }}</b>
         <form action="{{ route('orders.update_boy', ['id' => $item->id]) }}" method="post" class="inline-form">
