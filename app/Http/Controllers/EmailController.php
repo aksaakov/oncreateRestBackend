@@ -9,7 +9,7 @@ class EmailController extends Controller
 {
 
     static public function sendNewOrderReq($order){
-        Mail::to('chalikov@oncreate.studio')->send(new OrderRequestMail($order));
+        Mail::to('a.cealicov@gmail.com')->send(new OrderRequestMail($order));
         return response()->json(['message' => 'Request completed']);
     }
 
