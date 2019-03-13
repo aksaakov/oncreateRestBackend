@@ -163,14 +163,14 @@
     <script src='https://code.jquery.com/jquery-2.2.0.min.js'></script>
     <script src='https://cdn.rawgit.com/admsev/jquery-play-sound/master/jquery.playSound.js'></script>
 
-    <script>
+     <script>
         function notifyMe() {
             // Let's check if the browser supports notifications
             if (!("Notification" in window)) {
                 alert("This browser does not support desktop notification");
             }
             // Let's check whether notification permissions have already been granted
-            else if (Notification.permission === "granted" && document.visibilityState !== "visible") {
+            else if (Notification.permission === "granted") {
                 // If it's okay let's create a notification
                 var notification = new Notification("New order notification!",
                     {
@@ -184,7 +184,7 @@
             }
 
             // Otherwise, we need to ask the user for permission
-            else if (Notification.permission !== "denied" && document.visibilityState !== "visible") {
+            else if (Notification.permission !== "denied") {
                 Notification.requestPermission().then(function (permission) {
                     // If the user accepts, let's create a notification
                     if (permission === "granted") {
@@ -201,7 +201,7 @@
         var ordersButton   = $('.orders_button');
         var notificationDot   = $('.notification_dot');
         var notificationsText = $('.notifications_text');
-
+        
         var notificationsCount = parseInt("<?php echo $notifications; ?>");
         if (notificationsCount <= 0) {
             notificationsText.hide();
@@ -235,7 +235,7 @@
                         if(value)  window.location.replace("/orders");
                     });
             }
-            notifyMe();
+            if(document.visibilityState !== "visible") notifyMe();
         });
     </script>
 </body>

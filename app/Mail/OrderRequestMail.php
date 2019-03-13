@@ -22,7 +22,7 @@ class OrderRequestMail extends Mailable
     public function build()
     {
         $address = env("MAIL_FROM_ADDRESS");
-        $name = 'New Order';
+        $name = 'Restaunt Notification';
         //$address = Settings::getSettings()->notification_email;
         //$name = Settings::getSettings()->mail_from_new_order_subject;
 
@@ -33,7 +33,7 @@ class OrderRequestMail extends Mailable
         
         return $this->view('emails.send')
 //            ->from($address, $name)
-            ->cc($address, $name)
+//            ->cc($address, $name)
 //            ->bcc($address, $name)
 //            ->replyTo($address, $name)
             ->from($address, $name)

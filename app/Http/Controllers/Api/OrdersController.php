@@ -91,7 +91,7 @@ class OrdersController extends Controller
 
             $user = User::first();
             Notification::send($user, new orderAlert($order));
-//            EmailController::sendNewOrderReq($order);
+            EmailController::sendNewOrderReq($order);
 
 
             $response = [
