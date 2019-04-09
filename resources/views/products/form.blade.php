@@ -170,7 +170,7 @@
         <label for="" class="control-label">Extras:</label>
         <div class="row">
             <table id="options1" class="table table-bordered">
-            @foreach(App\ProductExtras::where('extra_type', 'Extras')->get()  as $extras)
+            @foreach($item->productExtras->where('extra_type', 'Extras')  as $extras)
 
                 <tr id="{{$extras->id}}">
                     <td>{{$extras->extra_name}}</td>
@@ -194,7 +194,7 @@
         <label for="" class="control-label">Exclusions:</label>
         <div class="row">
             <table id="options2" class="table table-bordered">
-                @foreach(App\ProductExtras::where('extra_type', 'Exclusions')->get() as $extras)
+                @foreach($item->productExtras->where('extra_type', 'Exclusions')  as $extras)
                     <tr id="{{$extras->id}}">
                         <td>{{$extras->extra_name}}</td>
                         <td>
