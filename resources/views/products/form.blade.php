@@ -229,14 +229,16 @@
 <script>
     $(document).ready(function(){
         var postURL = "<?php echo url('addmore'); ?>";
-        var extra_rows= document.getElementById('options1').rows.length;
+        var extras= document.getElementById('options1').rows.length;
+        var exclusions= document.getElementById('options2').rows.length;
         var target = [];
 
         $('#addExtra').click(function(){
-            $('#options1').append('<tr id="row'+extra_rows+'" class="dynamic-added" ><td>' +
+            extras++;
+            $('#options1').append('<tr id="row'+extras+'" class="dynamic-added" ><td>' +
                 '<input type="text" name="extras[]" class="form-control name_list" /></td>' +
                 '<td style="width:20%;"><input type="text" name="extra_price[]" value="0" class="form-control name_list" /></td>' +
-                '<td><button style="margin-left: 20px;" type="button" name="remove" id="'+extra_rows+'" class="btn btn-danger btn_remove">' +
+                '<td><button style="margin-left: 20px;" type="button" name="remove" id="'+extras+'" class="btn btn-danger btn_remove">' +
                 '<span class="glyphicon glyphicon-remove"></span>' +
                 '</button></td></tr>');
 
@@ -248,9 +250,10 @@
 
 
         $('#addExtra2').click(function(){
-            $('#options2').append('<tr id="row'+extra_rows+'" class="dynamic-added" ><td>' +
+            exclusions++;
+            $('#options2').append('<tr id="row'+exclusions+'" class="dynamic-added" ><td>' +
                 '<input style="width:80%; type="text" name="exclusions[]" class="form-control name_list" /></td>' +
-                '<td><button style="margin-left: 20px;" type="button" name="remove" id="'+extra_rows+'" class="btn btn-danger btn_remove">' +
+                '<td><button style="margin-left: 20px;" type="button" name="remove" id="'+exclusions+'" class="btn btn-danger btn_remove">' +
                 '<span class="glyphicon glyphicon-remove"></span>' +
                 '</button></td></tr>');
 
