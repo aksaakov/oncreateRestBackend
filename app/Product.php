@@ -2,15 +2,15 @@
 
 namespace App;
 
-use App\Category;
+
 use Illuminate\Database\Eloquent\Model;
-use App\TaxGroup;
+
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'category_id', 'description', 'price', 'price_old', 'tax_group_id', 'sort', 'vendor_id'];
+    protected $fillable = ['name', 'category_id', 'description', 'price', 'price_old', 'tax_group_id', 'sort', 'vendor_id', 'extra_type', 'extra_name', 'extra_price'];
 
-    protected $appends = ['images', 'formatted_price', 'formatted_old_price', 'tax_value', 'city_id', 'restaurant_id', 'extra_type', 'extra_name', 'extra_price'];
+    protected $appends = ['images', 'formatted_price', 'formatted_old_price', 'tax_value', 'city_id', 'restaurant_id'];
 
     public function vendor()
     {
