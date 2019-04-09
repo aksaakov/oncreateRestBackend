@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\ProductImage;
+use App\ProductExtras;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Validation\Rules\In;
 use Validator;
 use Gate;
 use App\Category;
@@ -77,6 +80,37 @@ class ProductsController extends BaseController
         $validator = $this->getValidator($request);
         if ($validator->passes()) {
             $item->fill($request->all());
+
+
+            if(Input::get('extras') != null){
+                $y = 0;
+                foreach(Input::get('extras') as $extra_name_input) {
+                    $x = $request->extra_price[$y++];
+                    $prodExtra = new ProductExtras([
+                        'product_id' => $item->id,
+                        'extra_type' => 'Extras',
+                        'extra_name' => $extra_name_input,
+                        'extra_price' => $x,
+                    ]);
+
+                    $prodExtra->save();
+                }
+            }
+
+            if(Input::get('exclusions') != null){
+
+                foreach(Input::get('exclusions') as $exclusion_name_input) {
+
+                    $prodExtra = new ProductExtras([
+                        'product_id' => $item->id,
+                        'extra_type' => 'Exclusions',
+                        'extra_name' => $exclusion_name_input,
+                    ]);
+
+                    $prodExtra->save();
+                }
+            }
+
             $item->save();
             if (Input::file('image') != null) {
                 foreach (Input::file('image') as $image) {
@@ -103,6 +137,15 @@ class ProductsController extends BaseController
         $pi = ProductImage::find($id);
         if ($pi) {
             $pi->delete();
+        }
+        return response()->json([]);
+    }
+
+    public static function deleteExtra(Request $request, $id)
+    {
+        $pe = ProductExtras::find($id);
+        if ($pe) {
+            $pe->delete();
         }
         return response()->json([]);
     }

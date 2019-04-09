@@ -8,9 +8,9 @@ use App\TaxGroup;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'category_id', 'description', 'price', 'price_old', 'tax_group_id', 'sort', 'vendor_id', 'option1', 'option2', 'option3', 'option4', 'option5', 'option6'];
+    protected $fillable = ['name', 'category_id', 'description', 'price', 'price_old', 'tax_group_id', 'sort', 'vendor_id'];
 
-    protected $appends = ['images', 'formatted_price', 'formatted_old_price', 'tax_value', 'city_id', 'restaurant_id'];
+    protected $appends = ['images', 'formatted_price', 'formatted_old_price', 'tax_value', 'city_id', 'restaurant_id', 'extra_type', 'extra_name', 'extra_price'];
 
     public function vendor()
     {
@@ -30,6 +30,10 @@ class Product extends Model
     public function productImages()
     {
         return $this->hasMany('App\ProductImage');
+    }
+
+    public function productExtras(){
+        return $this->hasMany('App\ProductExtras', 'product_id');
     }
 
     public function orderedProducts()

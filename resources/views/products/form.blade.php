@@ -1,3 +1,6 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 @extends('layouts.app')
 
 @section('content')
@@ -135,70 +138,6 @@
             @endif
         </div>
 
-        <label for="" class="control-label">Additional Options:</label>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group {{ $errors->has('option') ? ' has-error' : '' }}">
-                    <input type="text" class="form-control" value="{{$item->option1}}" name="option1"/>
-                    @if ($errors->has('option'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('option') }}</strong>
-                        </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group {{ $errors->has('option') ? ' has-error' : '' }}">
-                    <input type="text" class="form-control" value="{{$item->option2}}" name="option2"/>
-                    @if ($errors->has('option'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('option') }}</strong>
-                        </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group {{ $errors->has('option') ? ' has-error' : '' }}">
-                    <input type="text" class="form-control" value="{{$item->option3}}" name="option3"/>
-                    @if ($errors->has('option'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('option') }}</strong>
-                        </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group {{ $errors->has('option') ? ' has-error' : '' }}">
-                    <input type="text" class="form-control" value="{{$item->option4}}" name="option4"/>
-                    @if ($errors->has('option'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('option') }}</strong>
-                        </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group {{ $errors->has('option') ? ' has-error' : '' }}">
-                    <input type="text" class="form-control" value="{{$item->option5}}" name="option5"/>
-                    @if ($errors->has('option'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('option') }}</strong>
-                        </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group {{ $errors->has('option') ? ' has-error' : '' }}">
-                    <input type="text" class="form-control" value="{{$item->option6}}" name="option6"/>
-                    @if ($errors->has('option'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('option') }}</strong>
-                        </span>
-                    @endif
-                </div>
-            </div>
-        </div>
-
         <h3>{{__('messages.products.f_image')}}</h3>
         <div class="row">
             @foreach($item->productImages as $image)
@@ -226,9 +165,121 @@
         <br>
         <br>
 
+
+        <br>
+        <label for="" class="control-label">Extras:</label>
+        <div class="row">
+            <table id="options1" class="table table-bordered">
+            @foreach(App\ProductExtras::where('extra_type', 'Extras')->get()  as $extras)
+
+                <tr id="{{$extras->id}}">
+                    <td>{{$extras->extra_name}}</td>
+                    <td style="width:20%;">{{$extras->extra_price}}</td>
+                    <td>
+                        <a type="button" name="remove" onclick="deleteRow(this)" class="btn btn-danger btn_remove">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </td>
+                </tr>
+            @endforeach
+
+            </table>
+            <tr id="extra-1">
+                <td><button type="button" name="addExtra" id="addExtra" class="btn btn-success">Add Option</button></td>
+            </tr>
+        </div>
+
+        <br>
+
+        <label for="" class="control-label">Exclusions:</label>
+        <div class="row">
+            <table id="options2" class="table table-bordered">
+                @foreach(App\ProductExtras::where('extra_type', 'Exclusions')->get() as $extras)
+                    <tr id="{{$extras->id}}">
+                        <td>{{$extras->extra_name}}</td>
+                        <td>
+                            <a type="button" name="remove" onclick="deleteRow(this)" class="btn btn-danger btn_remove">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+
+            </table>
+            <tr id="extra-1">
+                <td><button type="button" name="addExtra2" id="addExtra2" class="btn btn-success">Add Option</button></td>
+            </tr>
+        </div>
+        <div>
+
+
+            {{--<input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />--}}
+        </div>
+
+        <br>
+        <br>
+
         <button type="submit" class="btn btn-primary btn-block">{{__('messages.actions.save')}}</button>
     </form>
     @if (\App\Settings::getSettings()->multiple_cities || \App\Settings::getSettings()->multiple_restaurants)
         <script src="/custom_js/products.js"></script>
     @endif
 @endsection
+
+<script>
+    $(document).ready(function(){
+        var postURL = "<?php echo url('addmore'); ?>";
+        var extra_rows= document.getElementById('options1').rows.length;
+        var target = [];
+
+        $('#addExtra').click(function(){
+            $('#options1').append('<tr id="row'+extra_rows+'" class="dynamic-added" ><td>' +
+                '<input type="text" name="extras[]" class="form-control name_list" /></td>' +
+                '<td style="width:20%;"><input type="text" name="extra_price[]" value="0" class="form-control name_list" /></td>' +
+                '<td><button style="margin-left: 20px;" type="button" name="remove" id="'+extra_rows+'" class="btn btn-danger btn_remove">' +
+                '<span class="glyphicon glyphicon-remove"></span>' +
+                '</button></td></tr>');
+
+            var cells = target.get("td");
+            for (var i = 0; i < cells.length; i++) {
+                data.push(cells[i].innerHTML);
+            }
+        });
+
+
+        $('#addExtra2').click(function(){
+            $('#options2').append('<tr id="row'+extra_rows+'" class="dynamic-added" ><td>' +
+                '<input style="width:80%; type="text" name="exclusions[]" class="form-control name_list" /></td>' +
+                '<td><button style="margin-left: 20px;" type="button" name="remove" id="'+extra_rows+'" class="btn btn-danger btn_remove">' +
+                '<span class="glyphicon glyphicon-remove"></span>' +
+                '</button></td></tr>');
+
+            var cells = target.get("td");
+            for (var i = 0; i < cells.length; i++) {
+                data.push(cells[i].innerHTML);
+            }
+        });
+
+
+        $(document).on('click', '.btn_remove', function(){
+            var button_id = $(this).attr("id");
+            $('#row'+button_id+'').remove();
+        });
+
+        $('#submit').click(function(){
+            var cells = target.get("td");
+            for (var i = 0; i < cells.length; i++) {
+                data.push(cells[i].innerHTML);
+            }
+        });
+    });
+
+    function deleteRow(btn) {
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+        var id = row.id;
+        {{--{{ url('product_extra', id) }}--}}
+        $.get('/product_extra/' + id + '/delete');
+    }
+
+</script>

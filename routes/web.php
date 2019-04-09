@@ -20,6 +20,7 @@ Route::get('/notify', 'PusherNotificationsController@sendNotification');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/product_extra/{id}/delete', 'ProductsController@deleteExtra');
     Route::post('/category/{id}/up', 'CategoriesController@up')->name('category_up');
     Route::post('/category/{id}/down', 'CategoriesController@down')->name('category_down');
     Route::resource('categories', 'CategoriesController');
