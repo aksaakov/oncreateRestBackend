@@ -67,6 +67,7 @@
                 <tr>
                     <td>{{ $op->product->name }}</td>
                     <td>{{ \App\Settings::currency($op->price) }}</td>
+                    {{--<td>{{ json_decode($op->extras)->product_id }}</td>--}}
                     <td>{{ $op->count }}</td>
                     <td>{{ \App\Settings::currency($op->price * $op->count) }}</td>
                 </tr>

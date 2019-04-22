@@ -133,13 +133,20 @@ class OrdersService
             $order->save();
             foreach ($products as $item) {
                 $product = Product::where('id', $item['product']['id'])->first();
+
+                (isset($item['extras']))?($extras = json_encode($item['extras'])):($extras = '[]');
+                (isset($item['exclusions']))?($exclusions = json_encode($item['exclusions'])):($exclusions = '[]');
+
+
                 if ($product != null) {
                     $op = new OrderedProduct([
                         'product_id' => $product->id,
                         'order_id' => $order->id,
                         'count' => $item['count'],
                         'price' => $product->price,
-                        'product_data' => json_encode($item['product'])
+                        'product_data' => json_encode($item['product']),
+                        'extras' => $extras,
+                        'exclusions' => $exclusions
                     ]);
                     $op->save();
                 }

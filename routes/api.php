@@ -22,6 +22,7 @@ Route::group(['namespace' => 'Api', 'middleware' => ['cors']], function () {
     Route::get('/restaurants', 'RestaurantsController@index')->name('restaurants.index');
     Route::get('/delivery_areas', 'DeliveryAreasController@index')->name('delivery_areas.index');
     Route::get('/products', 'ProductsController@index')->name('products.index');
+    Route::get('/product_extras', 'ProductsController@productExtras')->name('products.productExtras');
     Route::get('/news', 'NewsItemsController@index')->name('news.index');
     Route::post('/order', 'OrdersController@create')->name('orders.create');
     Route::post('/promo_codes/validate', 'PromoCodesController@validate_code')->name('promo_codes.validate');

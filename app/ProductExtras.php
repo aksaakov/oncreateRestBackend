@@ -12,6 +12,6 @@ class ProductExtras extends Model
 
     public function product()
     {
-        return $this->belongsToMany('App\Product');
+        return $this->belongsTo('App\Product');
     }
 }

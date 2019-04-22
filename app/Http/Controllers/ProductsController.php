@@ -92,7 +92,6 @@ class ProductsController extends BaseController
                         'extra_name' => $extra_name_input,
                         'extra_price' => $x,
                     ]);
-
                     $prodExtra->save();
                 }
             }
