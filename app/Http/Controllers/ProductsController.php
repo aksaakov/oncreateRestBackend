@@ -80,8 +80,7 @@ class ProductsController extends BaseController
         $validator = $this->getValidator($request);
         if ($validator->passes()) {
             $item->fill($request->all());
-
-
+            $item->save();
             if(Input::get('extras') != null){
                 $y = 0;
                 foreach(Input::get('extras') as $extra_name_input) {
@@ -97,7 +96,6 @@ class ProductsController extends BaseController
             }
 
             if(Input::get('exclusions') != null){
-
                 foreach(Input::get('exclusions') as $exclusion_name_input) {
 
                     $prodExtra = new ProductExtras([
@@ -109,8 +107,6 @@ class ProductsController extends BaseController
                     $prodExtra->save();
                 }
             }
-
-            $item->save();
             if (Input::file('image') != null) {
                 foreach (Input::file('image') as $image) {
                     if ($image != null) {
