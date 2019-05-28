@@ -114,6 +114,7 @@
         <b>{{'Tax:'}}</b> {{ \App\Settings::currency($item->tax) }}
     </p>
     <p class="text-right">
-        <b>{{ 'Grand Total:' }}</b> {{ \App\Settings::currency($item->getGrandTotal() + $extra_price_sum) }}
+{{--        <b>{{ 'Grand Total:' }}</b> {{ \App\Settings::currency($item->getGrandTotal() + $extra_price_sum) }}--}}
+        <b>{{ 'Grand Total:' }}</b> {{ \App\Settings::currency($item->total + $item->tax + $item->delivery_price + $extra_price_sum) }}
     </p>
 @endsection
