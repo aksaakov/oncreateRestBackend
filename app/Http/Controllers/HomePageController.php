@@ -52,7 +52,7 @@ class HomePageController extends BaseController
                 $fileNameToStore = 'homepageimage'.'.'.$extension;
                 //Upload Image
                 File::cleanDirectory(public_path('/homepage_image'));
-                $path = $request->file('image')->storeAs('/homepage_image', $fileNameToStore, 'public_path');
+                $path = $request->file('image')->storeAs('/homepage_image', $fileNameToStore, 'public_directory');
                 $item->image='homepage_image/'.$fileNameToStore;
                 $item->save();
     

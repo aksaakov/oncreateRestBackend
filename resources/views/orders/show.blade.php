@@ -57,23 +57,43 @@
         <thead>
             <tr>
                 <th>{{__('messages.ordered_products.f_name')}}</th>
-                <th>{{__('messages.ordered_products.f_price')}}</th>
-                <th>{{__('messages.ordered_products.f_count')}}</th>
+                <th>{{__('Price')}}</th>
+                <th>{{__('Extras/Exclusions')}}</th>
+                <th>{{__('Extra Price')}}</th>
+{{--                <th>{{__('messages.ordered_products.f_count')}}</th>--}}
                 <th>{{__('messages.ordered_products.f_total')}}</th>
             </tr>
         </thead>
         <tbody>
             @foreach($item->orderedProducts as $op)
                 <tr>
+{{--                    {{ json_decode($op['extras_total'], true) }}--}}
                     <td>{{ $op->product->name }}</td>
-                    <td>{{ \App\Settings::currency($op->price) }}</td>
-                    {{--<td>{{ json_decode($op->extras)->product_id }}</td>--}}
-                    <td>{{ $op->count }}</td>
-                    <td>{{ \App\Settings::currency($op->price * $op->count) }}</td>
+                    <td>{{  \App\Settings::currency($op->product->price) }}</td>
+                    <td>
+                    @php(\App\Settings::currency($extra_price_sum = 0))
+                    @foreach(json_decode($op->extras, true) as $extra)
+                        {{ $extra['extra_name'] }}<br>
+                    @endforeach
+                    @foreach(json_decode($op->exclusions, true) as $exclusion)
+                        -{{ $exclusion['extra_name'] }}<br>
+                    @endforeach
+                    </td>
+
+                    <td>
+                    @foreach(json_decode($op->extras, true) as $extra)
+                        {{ \App\Settings::currency($extra['extra_price']) }}<br>
+                            @php($extra_price_sum += $extra['extra_price'])
+                    @endforeach
+                    </td>
+                    <td><strong>{{ \App\Settings::currency($op->price + $extra_price_sum) }}</strong></td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+        <p class="text-right">
+            <b>{{'Total:'}}</b> {{ \App\Settings::currency($item->total + $extra_price_sum) }}
+        </p>
     @if ($item->deliveryArea != null)
         <p class="text-right">
             <b>{{ __('messages.orders.delivery_title') }}</b>
@@ -91,12 +111,9 @@
         </p>
     @endif
     <p class="text-right">
-        <b>{{__('messages.orders.total_title')}}</b> {{ \App\Settings::currency($item->total) }}
+        <b>{{'Tax:'}}</b> {{ \App\Settings::currency($item->tax) }}
     </p>
     <p class="text-right">
-        <b>{{__('messages.orders.tax_title')}}</b> {{ \App\Settings::currency($item->tax) }}
-    </p>
-    <p class="text-right">
-        <b>{{__('messages.orders.total_with_tax_title')}}</b> {{ \App\Settings::currency($item->getGrandTotal()) }}
+        <b>{{ 'Grand Total:' }}</b> {{ \App\Settings::currency($item->getGrandTotal() + $extra_price_sum) }}
     </p>
 @endsection

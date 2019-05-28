@@ -136,7 +136,10 @@ class OrdersService
 
                 (isset($item['extras']))?($extras = json_encode($item['extras'])):($extras = '[]');
                 (isset($item['exclusions']))?($exclusions = json_encode($item['exclusions'])):($exclusions = '[]');
-
+//                $extras_total = 0;
+//                foreach($item['extras'] as $extra) {
+//                    $extras_total += $extra['extra_price'];
+//                }
 
                 if ($product != null) {
                     $op = new OrderedProduct([
@@ -146,7 +149,8 @@ class OrdersService
                         'price' => $product->price,
                         'product_data' => json_encode($item['product']),
                         'extras' => $extras,
-                        'exclusions' => $exclusions
+                        'exclusions' => $exclusions,
+//                        'extras_total' => $extras_total
                     ]);
                     $op->save();
                 }

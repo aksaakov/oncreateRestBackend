@@ -78,7 +78,7 @@ class Order extends Model
 
     public function getGrandTotal()
     {
-        return $this->total_with_tax + $this->delivery_price;
+        return $this->total_with_tax + $this->delivery_price + $this->extras_total;
     }
 
     /**
